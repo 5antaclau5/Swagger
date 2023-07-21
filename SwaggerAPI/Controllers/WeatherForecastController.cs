@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Api.Controllers;
+using Microsoft.AspNetCore.Mvc;
+using SwaggerAPI.Service.Employee;
 
 namespace SwaggerAPI.Controllers;
 
 [ApiController]
-[Route("[controller]")]
-public class WeatherForecastController : ControllerBase
+[Route("api/[controller]")]
+public class WeatherForecastController : BaseController
 {
+    private readonly IEmployee _service;
+
     private static readonly string[] Summaries = new[]
     {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -13,9 +17,10 @@ public class WeatherForecastController : ControllerBase
 
     private readonly ILogger<WeatherForecastController> _logger;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger,IEmployee service)
     {
         _logger = logger;
+        _service = service;
     }
 
     [HttpGet(Name = "GetWeatherForecast")]
